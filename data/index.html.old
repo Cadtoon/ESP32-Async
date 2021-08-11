@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html><head>
+  <title>%inputTitle%</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="site.css">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/segment7" type="text/css" />
+	<script src="site.js" type="text/javascript"></script>
+
+</head>
+</head>
+<body bgcolor="#000000">
+
+
+<p>&nbsp;https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv</p>
+<table border="0" align="center">
+  <tr>
+    <td align="center"><span class="title" id="title">%inputNetHOST%</span></td>
+  </tr>
+  <tr>
+    <td align="center"><span class="date"> <br>
+    &nbsp;</span></td>
+  </tr>
+  <tr>
+    <td align="center"><span class="date" id="ESPDATE">%ESPDATE%</span></td>
+  </tr>
+  <tr>
+    <td width="300" height="15" align="center"><span align="center" class="led" id="ESPTIME">00:00:00</span></td>
+  </tr>
+</table>
+<table align="center">
+  <tr>
+    <td>
+   	  <form action="/"><input type="submit" class="menu" value="Home" disabled /></form>
+   </td>
+    <td>
+   	  <form action="/time.html"><input type="submit" class="menu" value="Time Settings" /></form>
+   </td>
+    <td>
+    	<form action="/ElegantOTA.html"><input type="submit" class="menu" value="AsyncElegantOTA" /></form>
+	</td>
+    <td>
+    	<form action="/network.html"><input type="submit" class="menu" value="Network Station" /></form>
+	</td>
+    <td>
+    	<form action="/softap.html"><input type="submit" class="menu" value="Access Point" /></form>
+	</td>
+  </tr>
+</table>
+<table border = "0" align="center" cellpadding="5" cellspacing="5">
+    <tr>
+        <td colspan="3" align="center" valign="top" bgcolor="#FFFFFF">
+            <form action="/get" target="hidden-form">
+            <strong>Router SSID Name</strong>
+            <br><input type="button" id="NetSSIDInput" value="%inputNetSSID%" size="6" disabled>
+            <br><input type="text" name="inputNetSSID" value="" size="32">
+            <br><input type="submit" value="Update" onClick="submitMessage()">
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" align="center" valign="top" bgcolor="#FFFFFF">
+            <form action="/get" target="hidden-form">
+            <strong>Router Password</strong>
+            <br><input type="button" id="NetPASSInput" value="%inputNetPASS%" size="6" disabled>
+            <br><input type="text" name="inputNetPASS" value="" size="32">
+            <br><input type="submit" value="Update" onClick="submitMessage()">
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" align="center" valign="top" bgcolor="#FFFFFF">
+            <form action="/get" target="hidden-form">
+            <strong>Network Hostname</strong>
+            <br><input type="button" id="NetHOSTinput" value="%inputNetHOST%" size="6" disabled>
+            <br><input type="text" name="inputNetHOST" value="" size="32">
+            <br><input type="submit" value="Update" onClick="submitMessage()">
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" align="center" valign="top" bgcolor="#FFFFFF">
+            <form action="/get" target="hidden-form">
+            <strong>Soft AP SSID Name</strong>
+            <br><input type="button" id="APSSIDInput" value="%inputAPSSID%" size="6" disabled>
+            <br><input type="text" name="inputAPSSID" value="" size="32">
+            <br><input type="submit" value="Update" onClick="submitMessage()">
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" align="center" valign="top" bgcolor="#FFFFFF">
+            <form action="/get" target="hidden-form">
+            <strong>Soft AP Password</strong>
+            <br><input type="button" id="APPASSInput" value="%inputAPPASS%" size="6" disabled>
+            <br><input type="text" name="inputAPPASS" value="" size="32">
+            <br><input type="submit" value="Update" onClick="submitMessage()">
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3" align="center" valign="top" bgcolor="#FFFFFF">
+           <form action="/get" target="hidden-form">
+           <strong>Minutes to Live</strong>
+           <br><input type="button" id="APTTLInput" value="%inputAPTTL%" size="6" disabled>
+           <br><strong>1</strong><input type="range" id="APTTLInput" min="1" max="60" step="1" name="inputAPTTL" value="%inputAPTTL%" onChange="updateAPTTLInput(this.value);" class="slider"><strong>60</strong>
+           <br><input type="submit" value="Update" onClick="submitMessage()">
+           </form>
+        </td>
+    </tr>
+    <tr>  
+        <td colspan="3" align="center" valign="top" bgcolor="#FFFFFF">
+            <form action="/get" target="hidden-form">
+            <input type="hidden" id="restartESP" name="restartESP" value="1">
+            <input type="submit" value="Restart ESP" onClick="submitMessage()">
+            </form>
+          </td>
+    </tr>
+	</table>
+<iframe style="display:none" name="hidden-form"></iframe>
+</body>
+</html>
+
