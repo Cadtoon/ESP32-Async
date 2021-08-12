@@ -1,0 +1,101 @@
+		  html {
+	font-family: Arial;
+	display: inline-block;
+	text-align: center;
+	padding-top: 3px;
+	padding-right: 3px;
+	padding-bottom: 30px;
+	padding-left: 3px;
+	color: #FFFFFF;
+}
+body{
+	color: #000000;
+	font-size: 18px;
+}
+
+		  h1 {font-size: 2rem;}
+		  h2 {font-size: 2rem;}
+		  h3 {font-size: 2rem;}
+	
+
+		  
+		  .slider { -webkit-appearance: none; margin: 1px; width: 200px; height: 15px; border-radius: 5px; background: #39a6de; outline: none; -webkit-transition: .2s; transition: opacity .2s;}
+		  .slider::-webkit-slider-thumb {-webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 12px; background: #f74d4d; cursor: pointer;}
+		  .slider::-moz-range-thumb { width: 25px; height: 25px; border-radius: 12px; background: #F74D4D; cursor: pointer; } 
+		  .switch { -webkit-appearance: none; margin: 1px; width: 50px; height: 15px; border-radius: 5px; background: #39a6de; outline: none; -webkit-transition: .2s; transition: opacity .2s;}
+		  .switch::-webkit-slider-thumb {-webkit-appearance: none; appearance: none; width: 25px; height: 25px; border-radius: 12px; background: #f74d4d; cursor: pointer;}
+		  .switch::-moz-range-thumb { width: 15px; height: 15px; border-radius: 12px; background: #F74D4D; cursor: pointer; } 
+
+input[type=button] {
+	background-color: #666666;
+	border: none;
+	color: white;
+	padding: 0px 0px;
+	text-decoration: none;
+	margin: 0px 0px;
+	cursor: pointer;
+}
+
+		  
+.sitename{
+	color: #FFFFFF;
+	font-size: 40px;
+	font-weight: bold;
+}
+.title{
+	color: #FFFF00;
+	font-size: 30px;
+	font-weight: normal;
+}
+.date{
+	color: #33CCFF;
+	font-size: 24px;
+	font-weight: normal;
+}
+.led {
+	font-family: 'Segment7Standard';
+	font-style: italic;
+	color: #FF0000;
+	font-size: xx-large;
+}
+.menu {
+	background-color: #FF6600;
+	border: 10;
+	color: white;
+	padding: 10px 30px;
+	text-decoration: none;
+	margin: 0px 0px;
+	cursor: pointer;
+	font-stretch: normal;
+	font-size: 16px;
+	border-top-color: #FFCC00;
+	border-right-color: #FFCC00;
+	border-bottom-color: #FF0000;
+	border-left-color: #FF0000;
+	border-top-width: thick;
+	border-right-width: thick;
+	border-bottom-width: thick;
+	border-left-width: thick;
+}
+.update {
+	background-color: #4CAF50;
+	border: none;
+	color: white;
+	padding: 0px 0px;
+	text-decoration: none;
+	margin: 0px 0px;
+	cursor: pointer;
+}
+.reset {
+	background-color: #FF0000;
+	border: none;
+	color: white;
+	padding: 0px 0px;
+	text-decoration: none;
+	margin: 0px 0px;
+	cursor: pointer;
+}
+.copy{
+	color: #FFFFFF;
+	text-align: left;
+}

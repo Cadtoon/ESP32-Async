@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html><head>
+  <title>Time Settings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="site.css">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/segment7" type="text/css" />
+	<script src="site.js" type="text/javascript"></script>
+
+</head>
+
+<body bgcolor="#000000">
+<table border="0" align="center">
+  <tr>
+    <td align="center"><span class="sitename">%inputNetHOST%</span></td>
+  </tr>
+  <tr>
+    <td align="center"><span class="title"><script>document.write(document.title);</script></span></td>
+  </tr>
+  <tr>
+    <td align="center"><br><span class="date" id="ESPDATE">&nbsp;</span></td>
+  </tr>
+  <tr>
+    <td height="15" align="center"><span align="center" class="led" id="ESPTIME">00:00:00</span></td>
+  </tr>
+</table>
+<br>
+<table border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td>
+   	  <form action="/"><input type="submit" class="menu" value="Home" /></form>
+   </td>
+    <td>
+   	  <form action="/time.html"><input type="submit" class="menu" value="Time Settings" disabled /></form>
+   </td>
+    <td>
+    	<form action="/ElegantOTA.html"><input type="submit" class="menu" value="AsyncElegantOTA" /></form>
+	</td>
+    <td>
+    	<form action="/network.html"><input type="submit" class="menu" value="Network Station" /></form>
+	</td>
+    <td>
+    	<form action="/softap.html"><input type="submit" class="menu" value="Access Point" /></form>
+	</td>
+  </tr>
+</table>
+<br>
+<table border="0" align="center" cellpadding="8" cellspacing="2">
+  <tr>
+  	<form action="/get" target="hidden-form">
+    <td width="150" align="center" bgcolor="#FFFF66"><strong>Alarm Time</strong></td>
+    <td width="150"align="center" bgcolor="#666666" ><input type="button" id="Alarmtimeinput" value="%inputAlarmtime%" size="6" disabled></td>
+    <td width="250" align="center" bgcolor="#FFFFFF"><input type="time" id="inputAlarmtime" name="inputAlarmtime" value="%inputAlarmtime%"></td>
+    <td width="115" align="center" bgcolor="#4CAF50"><input type="submit" class="update" onClick="submitMessage()" value="Update"></td>
+    </form>
+  </tr>
+  <tr>
+  	<form action="/get" target="hidden-form">
+    <td align="center" bgcolor="#FFFF66"><strong>Alarm Switch</strong></td>
+    <td align="center" bgcolor="#666666"><input type="button" id="ALARMInput" value="%inputAlarm%" size="6" disabled></td>
+    <td align="center" bgcolor="#FFFFFF"><font size="-1" face="0Font">Off <input type="range" id="Alarminput" min="0" max="1" step="1" name="inputAlarm" value="%inputAlarm%" onChange="updateALARMInput(this.value);" class="switch"> 
+    On</font></td>
+    <td align="center" bgcolor="#4CAF50"><input type="submit" class="update" onClick="submitMessage()" value="Update"></td>
+    </form>
+  </tr>
+  <tr>
+  	<form action="/get" target="hidden-form">
+    <td align="center" bgcolor="#FFFF66"><strong>NTP Server</strong></td>
+    <td align="center" bgcolor="#666666"><input type="button" id="NTPSERVERInput" value="%inputNTPSERVER%" size="6" disabled></td>
+    <td align="center" bgcolor="#FFFFFF"><input type="text" name="inputNTPSERVER" value="%inputNTPSERVER%" size="32"></td>
+    <td width="115" align="center" bgcolor="#4CAF50"><input type="submit" class="update" onClick="submitMessage()" value="Update"></td>
+    </form>
+  </tr>
+  <tr>
+  	<form action="/get" target="hidden-form">
+    <td align="center" bgcolor="#FFFF66"><strong>NTP Zone</strong></td>
+    <td align="center" bgcolor="#666666"><input type="button" id="NTPZONEInput" value="%inputNTPZONE%" size="6" disabled></td>
+    <td align="center" bgcolor="#FFFFFF"><input type="text" name="inputNTPZONE" value="%inputNTPZONE%" size="32"></td>
+    <td align="center" bgcolor="#4CAF50"><input type="submit" class="update" onClick="submitMessage()" value="Update"></td>
+    </form>
+  </tr>
+</table>
+<BR>
+<table width="800" border="0" align="center" cellpadding="3" cellspacing="10">
+  <tr><td><p align="center"><a href="https://gist.github.com/mutin-sa/eea1c396b1e610a2da1e5550d94b0453" title="FIND MY TIME SERVER" target="_blank" class="copy">FIND MY TIME SERVER</a></p>
+</td><td><p align="center"><a href="https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv" title="FIND MY TIME ZONE" target="_blank" class="copy">FIND MY TIME ZONE</a></p>
+</td></tr>
+  <tr>
+    <td colspan="2" bgcolor="#000000" class="copy"><p>Time, too much, too little, too soon, too  late, it's about time. </p>
+      <p>The thought of putting in time was in a way  to demonstrate the use of different inputs, but it falls short of doing that,  but not really. A tutorial I followed was demonstrating how to use strings, integers,  and floats. Well, from everything I have done so far, the only thing you can  pass between an App and a webpage is text. If you want to use it in a different  format you must convert it once it has been passed over. The alarm time, it's  converted to text before it is sent here. The time display at the top of the  page, it's just text with a fancy font. When you select a time from the input  and click the update, it is sent as text. The alarm on-off, you will notice in  the grey area that it is stored as a 0 or 1. It is much easier to convert a 0  or 1 to a bool then on or off, true or false. Much the same applies to saving  the variables in a text file. if it is anything other than text, it must be  converted before you can use it, and in some cases, it needs to be converted to  a const string.</p>
+      <p>The alarm time and alarm on/off have no  functionality in this App. The NTP server and zone, they don't really serve any  functionality in App either, other than to display the ESPs time and data on  these webpages. However, it become very useful if your App needs any kind of scheduling  or is a seven-segment clock.</p>
+      <p>I have added links that contain list for  both time servers and time zones. I have found this to be the most efficient  way of setting the time. Other methods require the number of minutes offset  from GMT to calculate the time, and the number of minutes to offset for DST. These  are numbers you would probably need to Google to find anyway.</p>
+      <p align="left">&nbsp;</p>
+    </td>
+  </tr>
+</table>
+
+<iframe style="display:none" name="hidden-form"></iframe>
+
+</body>
+</html>
+

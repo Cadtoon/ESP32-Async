@@ -90,7 +90,7 @@ void GetNTPtime(){
       Serial.println("NTP time retrieved");
     }
     else{
-      Serial.println("NTP time NOT retrieved");
+      Serial.println("NTP Server not available");
     }
 }
 
@@ -256,7 +256,7 @@ String getESPdate(){ // send date in string format to webpage request
     struct tm timeinfo;
     if(!getLocalTime(&timeinfo)){
       Serial.println("date requested");
-      return("Failed local date");
+    return("Failed Local Time - No Date Available");
     }
     char timeStringBuff[50];
     strftime(timeStringBuff, sizeof(timeStringBuff), "%A, %B %d, %Y", &timeinfo);
@@ -265,8 +265,7 @@ String getESPdate(){ // send date in string format to webpage request
     return(timeStringBuff);
   }
   else{
-    Serial.println("date requested");
-    return("Failed Network - date");
+    return("Failed Network - No Date Available");
   }
 }
 
@@ -276,8 +275,7 @@ String getESPtime(){ // send time HH:MM:SS in string format to webpage request
   if(WiFi.status() == WL_CONNECTED){//if the Wi-Fi has a connection
     if(!getLocalTime(&timeinfo)){
       Serial.println("Failed to obtain time");
-      Serial.println("time requested");
-      return("11:11:11");
+      return("00:00:00");
     }
     char timeStringBuff[50];
     strftime(timeStringBuff, sizeof(timeStringBuff), "%H:%M:%S", &timeinfo);
@@ -286,8 +284,7 @@ String getESPtime(){ // send time HH:MM:SS in string format to webpage request
     return(timeStringBuff);
   }
   else{
-    Serial.println("time requested");
-    return("99:99:99");
+    return("00:00:00");
   }
 }
 
@@ -299,7 +296,7 @@ Serial.begin(115200);
       Serial.println("An Error has occurred while mounting SPIFFS");
       return;
     }
-  // Initialize Vars from files
+  // Initialize Vars from files on startup
   updateVars();
 
   //  Start Wi-Fi and AP
@@ -320,13 +317,14 @@ Serial.begin(115200);
     Serial.println("Error With Local Credentials");
   }
 
-  // send webpages on requests
+// handle time requests
   webserver.on("/ESPTIME", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(200, "text/plain", getESPtime());
   });
   webserver.on("/ESPDATE", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(200, "text/plain", getESPdate());
   });
+// handle webpage requests
   webserver.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.html", String(), false, processor);
   });
@@ -349,16 +347,9 @@ Serial.begin(115200);
   webserver.on("/site.js", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/site.js", String(), false, processor);
   });
-  // send webpage time and date on request
-//  webserver.on("/ESPDATE", HTTP_GET, [](AsyncWebServerRequest *request){
-//    request->send_P(200, "text/plain", getESPdate().c_str());
-//});
-//  webserver.on("/ESPTIME", HTTP_GET, [](AsyncWebServerRequest *request){
-//    request->send_P(200, "text/plain", getESPtime().c_str());
-//});
-  // send webpage inputs on request and update variables
-  webserver.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
+   webserver.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
     String inputMessage;
+// handle changes made to the Alarm settings
     if (request->hasParam(PARAM_ALARMTIME)) {
       inputMessage = request->getParam(PARAM_ALARMTIME)->value();
       writeFile(SPIFFS, "/inputAlarmtime.txt", inputMessage.c_str());
@@ -397,6 +388,7 @@ Serial.begin(115200);
       writeFile(SPIFFS, "/inputNetHOST.txt", inputMessage.c_str());
       wifi_network_hostname = inputMessage;
     }
+// handle changes made to the AP settings
     else if (request->hasParam(PARAM_APSSID)) {
       inputMessage = request->getParam(PARAM_APSSID)->value();
       writeFile(SPIFFS, "/inputAPSSID.txt", inputMessage.c_str());
@@ -436,7 +428,6 @@ Serial.begin(115200);
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 void loop() {
   if(millis() >= LOOPtimer + LOOP_period){ //better than using delay(1000);
-//    AsyncElegantOTA.loop(); //keeps OTA in waiting mode
     checkAP(); // keeps an eye on network connections
     LOOPtimer = millis(); //resets this timer
   }
