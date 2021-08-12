@@ -85,7 +85,13 @@ void OnWiFiEvent(WiFiEvent_t event){
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 void GetNTPtime(){
   //this function needs some error checking added. It won't work if there is no internet connection
-  configTzTime(NTPzone.c_str(), NTPserver.c_str()); // adjust to your local time zone with variable timezone
+    if(WiFi.status() == WL_CONNECTED){//if the Wi-Fi has a connection
+      configTzTime(NTPzone.c_str(), NTPserver.c_str()); // adjust to your local time zone with variable timezone
+      Serial.println("NTP time retrieved");
+    }
+    else{
+      Serial.println("NTP time NOT retrieved");
+    }
 }
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -94,8 +100,12 @@ void updateVars(){ //called from setup, loads all variables stored in files.
   Serial.println("***********************************************************");
   alarmtime = readFile(SPIFFS, "/inputAlarmtime.txt");
   Serial.print("*** alarmtime: "); Serial.println(alarmtime);
-  alarmswitch = readFile(SPIFFS, "/inputAlarmswitch.txt").toInt();
-  Serial.print("*** alarmswitch: "); Serial.println(alarmswitch);
+  Alarm_onoff = readFile(SPIFFS, "/inputAlarm.txt").toInt();
+  Serial.print("*** inputAlarm: "); Serial.println(Alarm_onoff);
+  NTPserver = readFile(SPIFFS, "/inputNTPSERVER.txt");
+  Serial.print("*** inputNTPSERVER: "); Serial.println(NTPserver);
+  NTPzone = readFile(SPIFFS, "/inputNTPZONE.txt");
+  Serial.print("*** inputNTPZONE: "); Serial.println(NTPzone);
   wifi_network_ssid = readFile(SPIFFS, "/inputNetSSID.txt");
   Serial.print("*** wifi_network_ssid: "); Serial.println(wifi_network_ssid);
   wifi_network_password = readFile(SPIFFS, "/inputNetPASS.txt");
@@ -162,8 +172,14 @@ String processor(const String& var){
   if(var == "inputAlarmtime"){
     return readFile(SPIFFS, "/inputAlarmtime.txt");
   }
- else if(var == "inputAlarmswitch"){
-    return readFile(SPIFFS, "/inputAlarmswitch.txt");
+  else if(var == "inputAlarm"){
+    return readFile(SPIFFS, "/inputAlarm.txt");
+  }
+  else if(var == "inputNTPSERVER"){
+    return readFile(SPIFFS, "/inputNTPSERVER.txt");
+  }
+  else if(var == "inputNTPZONE"){
+    return readFile(SPIFFS, "/inputNTPZONE.txt");
   }
   else if(var == "inputNetSSID"){
     return readFile(SPIFFS, "/inputNetSSID.txt");
@@ -191,7 +207,6 @@ String processor(const String& var){
 void checkAP(){
   if(millis() >= APTimer + (AP_period * 60000)){ // multiply AP_period. 60000 == 1 minute
     if(WiFi.status() != WL_CONNECTED){ //if the Wi-Fi has no connection
-      Serial.print("Attempting to connect to Local network, SSID: ");
       Serial.println("Reconnecting Local WiFi");
       WiFi.disconnect(); //disconnect prior attempt
       WiFi.begin(wifi_network_ssid.c_str(), wifi_network_password.c_str()); //restart Wi-Fi
@@ -237,30 +252,43 @@ void checkAP(){
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 String getESPdate(){ // send date in string format to webpage request
-  struct tm timeinfo;
-  if(!getLocalTime(&timeinfo)){
-    Serial.println("Failed to obtain time");
-    return("Failed ESPtime");
+  if(WiFi.status() == WL_CONNECTED){//if the Wi-Fi has a connection
+    struct tm timeinfo;
+    if(!getLocalTime(&timeinfo)){
+      Serial.println("date requested");
+      return("Failed local date");
+    }
+    char timeStringBuff[50];
+    strftime(timeStringBuff, sizeof(timeStringBuff), "%A, %B %d, %Y", &timeinfo);
+    String asString(timeStringBuff);
+    Serial.println(timeStringBuff);
+    return(timeStringBuff);
   }
-  char timeStringBuff[50];
-  strftime(timeStringBuff, sizeof(timeStringBuff), "%A, %B %d, %Y", &timeinfo);
-  String asString(timeStringBuff);
-  Serial.println(timeStringBuff);
-  return(timeStringBuff);
+  else{
+    Serial.println("date requested");
+    return("Failed Network - date");
+  }
 }
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 String getESPtime(){ // send time HH:MM:SS in string format to webpage request
   struct tm timeinfo;
-  if(!getLocalTime(&timeinfo)){
-    Serial.println("Failed to obtain time");
-    return("Failed ESPtime");
+  if(WiFi.status() == WL_CONNECTED){//if the Wi-Fi has a connection
+    if(!getLocalTime(&timeinfo)){
+      Serial.println("Failed to obtain time");
+      Serial.println("time requested");
+      return("11:11:11");
+    }
+    char timeStringBuff[50];
+    strftime(timeStringBuff, sizeof(timeStringBuff), "%H:%M:%S", &timeinfo);
+    String asString(timeStringBuff);
+    Serial.println(timeStringBuff);
+    return(timeStringBuff);
   }
-  char timeStringBuff[50];
-  strftime(timeStringBuff, sizeof(timeStringBuff), "%H:%M:%S", &timeinfo);
-  String asString(timeStringBuff);
-  Serial.println(timeStringBuff);
-  return(timeStringBuff);
+  else{
+    Serial.println("time requested");
+    return("99:99:99");
+  }
 }
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -293,6 +321,12 @@ Serial.begin(115200);
   }
 
   // send webpages on requests
+  webserver.on("/ESPTIME", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(200, "text/plain", getESPtime());
+  });
+  webserver.on("/ESPDATE", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(200, "text/plain", getESPdate());
+  });
   webserver.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.html", String(), false, processor);
   });
@@ -316,12 +350,12 @@ Serial.begin(115200);
     request->send(SPIFFS, "/site.js", String(), false, processor);
   });
   // send webpage time and date on request
-  webserver.on("/ESPDATE", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", getESPdate().c_str());
-});
-  webserver.on("/ESPTIME", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send_P(200, "text/plain", getESPtime().c_str());
-});
+//  webserver.on("/ESPDATE", HTTP_GET, [](AsyncWebServerRequest *request){
+//    request->send_P(200, "text/plain", getESPdate().c_str());
+//});
+//  webserver.on("/ESPTIME", HTTP_GET, [](AsyncWebServerRequest *request){
+//    request->send_P(200, "text/plain", getESPtime().c_str());
+//});
   // send webpage inputs on request and update variables
   webserver.on("/get", HTTP_GET, [] (AsyncWebServerRequest *request) {
     String inputMessage;
@@ -330,10 +364,23 @@ Serial.begin(115200);
       writeFile(SPIFFS, "/inputAlarmtime.txt", inputMessage.c_str());
       alarmtime = inputMessage;
     }
-    else if (request->hasParam(PARAM_ALARMSWITCH)) {
-      inputMessage = request->getParam(PARAM_ALARMSWITCH)->value();
-      writeFile(SPIFFS, "/inputAlarmswitch.txt", inputMessage.c_str());
-      alarmswitch = inputMessage.toInt();
+    else if (request->hasParam(PARAM_ALARMONOFF)) {
+      inputMessage = request->getParam(PARAM_ALARMONOFF)->value();
+      writeFile(SPIFFS, "/inputAlarm.txt", inputMessage.c_str());
+      Alarm_onoff = inputMessage.toInt();
+    }
+// handle changes made to the NTP settings
+    else if (request->hasParam(PARAM_NTPSERVER)) {
+      inputMessage = request->getParam(PARAM_NTPSERVER)->value();
+      writeFile(SPIFFS, "/inputNTPSERVER.txt", inputMessage.c_str());
+      NTPserver = inputMessage;
+      GetNTPtime(); //when a change is made update the ESP time
+    }
+    else if (request->hasParam(PARAM_NTPZONE)) {
+      inputMessage = request->getParam(PARAM_NTPZONE)->value();
+      writeFile(SPIFFS, "/inputNTPZONE.txt", inputMessage.c_str());
+      NTPzone = inputMessage;
+      GetNTPtime(); //when a change is made update the ESP time
     }
     else if (request->hasParam(PARAM_NETSSID)) {
       inputMessage = request->getParam(PARAM_NETSSID)->value();
@@ -389,7 +436,7 @@ Serial.begin(115200);
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 void loop() {
   if(millis() >= LOOPtimer + LOOP_period){ //better than using delay(1000);
-    AsyncElegantOTA.loop(); //keeps OTA in waiting mode
+//    AsyncElegantOTA.loop(); //keeps OTA in waiting mode
     checkAP(); // keeps an eye on network connections
     LOOPtimer = millis(); //resets this timer
   }
