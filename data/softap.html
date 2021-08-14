@@ -11,34 +11,34 @@
 <body bgcolor="#000000">
 <table border="0" align="center">
   <tr>
-    <td align="center"><span class="sitename">%inputNetHOST%</span></td>
+    <td align="center" valign="top"><span class="sitename">%inputNetHOST%</span></td>
   </tr>
   <tr>
-    <td align="center"><span class="title"><script>document.write(document.title);</script></span></td>
+    <td align="center" valign="top"><span class="title"><script>document.write(document.title);</script></span></td>
   </tr>
   <tr>
-    <td align="center"><br><span class="date" id="ESPDATE">&nbsp;</span></td>
+    <td align="center" valign="top"><br><span class="date" id="ESPDATE">&nbsp;</span></td>
   </tr>
   <tr>
-    <td height="15" align="center"><span align="center" class="led" id="ESPTIME">00:00:00</span></td>
+    <td height="15" align="center" valign="top"><span align="center" class="led" id="ESPTIME"></span><br><font color="#FFFFFF">Hour - Min<BR>ESP Time</font></td>
   </tr>
 </table>
 <br>
 <table border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td>
+    <td valign="top">
    	  <form action="/"><input type="submit" class="menu" value="Home" /></form>
    </td>
-    <td>
+    <td valign="top">
    	  <form action="/time.html"><input type="submit" class="menu" value="Time Settings" /></form>
    </td>
-    <td>
+    <td valign="top">
     	<form action="/ElegantOTA.html"><input type="submit" class="menu" value="AsyncElegantOTA" /></form>
 	</td>
-    <td>
+    <td valign="top">
     	<form action="/network.html"><input type="submit" class="menu" value="Network Station" /></form>
 	</td>
-    <td>
+    <td valign="top">
     	<form action="/softap.html"><input type="submit" class="menu" value="Access Point" disabled /></form>
 	</td>
   </tr>
@@ -47,26 +47,26 @@
 <table border="0" align="center" cellpadding="8" cellspacing="2">
   <tr>
   	<form action="/get" target="hidden-form">
-    <td width="150" align="center" bgcolor="#FFFF66"><strong>AP SSID Name</strong></td>
-    <td width="150" align="center" bgcolor="#666666"><input type="button" id="APSSIDInput" value="%inputAPSSID%" size="6" disabled></td>
-    <td width="250" align="center" bgcolor="#FFFFFF"><input type="text" name="inputAPSSID" value="" size="32"></td>
-    <td width="115" align="center" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
+    <td width="150" align="center" valign="top" bgcolor="#FFFF66"><strong>AP SSID Name</strong></td>
+    <td width="150" align="center" valign="top" bgcolor="#666666"><input type="button" id="APSSIDInput" value="%inputAPSSID%" size="6" disabled></td>
+    <td width="250" align="center" valign="top" bgcolor="#FFFFFF"><input type="text" name="inputAPSSID" value="" size="32"></td>
+    <td width="115" align="center" valign="top" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
     </form>
   </tr>
   <tr>
   	<form action="/get" target="hidden-form">
-    <td align="center" bgcolor="#FFFF66"><strong>AP Password</strong></td>
-    <td align="center" bgcolor="#666666"><input type="button" id="APPASSInput" value="%inputAPPASS%" size="6" disabled></td>
-    <td align="center" bgcolor="#FFFFFF"><input type="text" name="inputAPPASS" value="" size="32"></td>
-    <td align="center" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
+    <td align="center" valign="top" bgcolor="#FFFF66"><strong>AP Password</strong></td>
+    <td align="center" valign="top" bgcolor="#666666"><input type="button" id="APPASSInput" value="%inputAPPASS%" size="6" disabled></td>
+    <td align="center" valign="top" bgcolor="#FFFFFF"><input type="text" name="inputAPPASS" value="" size="32"></td>
+    <td align="center" valign="top" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
     </form>
   </tr>
   <tr>
   	<form action="/get" target="hidden-form">
-    <td align="center" bgcolor="#FFFF66"><strong>Minutes to Live</strong></td>
-    <td align="center" bgcolor="#666666"><input type="button" id="APTTLInput" value="%inputAPTTL%" size="6" disabled></td>
-    <td align="center" bgcolor="#FFFFFF"><strong>1</strong><input type="range" id="APTTLInput" min="1" max="60" step="1" name="inputAPTTL" value="%inputAPTTL%" onChange="updateAPTTLInput(this.value);" class="slider"><strong> 60</strong></td>
-    <td align="center" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
+    <td align="center" valign="top" bgcolor="#FFFF66"><strong>Minutes to Live</strong></td>
+    <td align="center" valign="top" bgcolor="#666666"><input type="button" id="APTTLInput" value="%inputAPTTL%" size="6" disabled></td>
+    <td align="center" valign="top" bgcolor="#FFFFFF"><strong>3</strong><input type="range" id="APTTLInput" min="3" max="60" step="1" name="inputAPTTL" value="%inputAPTTL%" onChange="updateAPTTLInput(this.value);" class="slider"><strong> 60</strong></td>
+    <td align="center" valign="top" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
     </form>
   </tr>
   <tr>
@@ -74,7 +74,7 @@
     <td></td>
     <td></td>
     <td></td>
-    <td align="center" bgcolor="#FF0000"><input type="hidden" id="restartESP" name="restartESP" value="1"><input type="submit" class="reset" value="Restart ESP" onClick="submitMessage()">
+    <td align="center" valign="top" bgcolor="#FF0000"><input type="hidden" id="restartESP" name="restartESP" value="1"><input type="submit" class="reset" value="Restart ESP" onClick="submitMessage()">
     </td>
     </form>
   </tr>
@@ -82,11 +82,11 @@
 <br>
 <table border="0" width="800" align="center" cellpadding="3" cellspacing="10">
   <tr>
-    <td bgcolor="#000000" class="copy"><p>The Access Point settings are similar to  the network settings. Although you won't have to worry about reserving an IP,  the SIDD name should be a unique name.</p>
-      <p>The default IP 192.168.4.1 can be changed  but has not been added to this App.</p>
-      <p>Minutes to Live is the amount of time the  AP will be available to connect to. This time is only initiated during start up  or after the network connection has been lost. If the timer is running, a  change is <a name="_Hlk79503073">immediate</a>. If the timer is set to 3  minutes and has 2:31 remaining, and you change it to 5 minutes, there will be  4:31 remaining. It will remain active until the time expires and a network  connection is established. Should the network connection continue to fail, the  AP will continue to run, and shutdown is diverted. When the time expires, it  will disconnect immediately if the network is established or reestablished.</p>
-      <p>Again the &quot;Restart ESP&quot; button is  there as a convenience. Any changes made to the name or password won't be  initiated until the ESP is restarted or the AP is reinitialized. You will need  to reconnect to the AP.</p>
-      <p align="left">&nbsp;</p>
+    <td valign="top" bgcolor="#000000" class="copy"><p>The Access Point settings are similar to the network settings. Although you won't have to worry about reserving an IP, the SIDD name should be a unique name.</p>
+      <p>The default IP, 192.168.4.1, can be changed but has not been added to this App.</p>
+      <p>Minutes to Live is the amount of time the AP will be available to connect to when first booted. This time is only initiated after boot up. If the timer is set to 3  minutes and has 2:31 remaining, and you change it to 5 minutes, there will now be 4:31 remaining. It will remain active until the time expires.</p>
+      <p>Again the &quot;Restart ESP&quot; button is there as a convenience. Any changes made to the name or password won't be initiated until the ESP is restarted or the AP is reinitialized. You will need to reconnect to the AP.</p>
+      <p>NOTE: The minimum time it can be changed to in this webpage is 3 minutes. If you edit this webpage and change the min range value, a setting of 1 minute may not give you enough time to make changes before it times out.</p>
     </td>
   </tr>
 </table>

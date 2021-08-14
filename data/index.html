@@ -11,34 +11,34 @@
 <body bgcolor="#000000">
 <table border="0" align="center">
   <tr>
-    <td align="center"><span class="sitename">%inputNetHOST%</span></td>
+    <td align="center" valign="top"><span class="sitename">%inputNetHOST%</span></td>
   </tr>
   <tr>
-    <td align="center"><span class="title"><script>document.write(document.title);</script></span></td>
+    <td align="center" valign="top"><span class="title"><script>document.write(document.title);</script></span></td>
   </tr>
   <tr>
-    <td align="center"><br><span class="date" id="ESPDATE">&nbsp;</span></td>
+    <td align="center" valign="top"><br><span class="date" id="ESPDATE">&nbsp;</span></td>
   </tr>
   <tr>
-    <td height="15" align="center"><span align="center" class="led" id="ESPTIME">00:00:00</span></td>
+    <td height="15" align="center" valign="top"><span align="center" class="led" id="ESPTIME"></span><br><font color="#FFFFFF">Hour - Min<BR>ESP Time</font></td>
   </tr>
 </table>
 <br>
 <table border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td>
+    <td valign="top">
    	  <form action="/"><input type="submit" class="menu" value="Home" disabled /></form>
    </td>
-    <td>
+    <td valign="top">
    	  <form action="/time.html"><input type="submit" class="menu" value="Time Settings" /></form>
    </td>
-    <td>
+    <td valign="top">
     	<form action="/ElegantOTA.html"><input type="submit" class="menu" value="AsyncElegantOTA" /></form>
 	</td>
-    <td>
+    <td valign="top">
     	<form action="/network.html"><input type="submit" class="menu" value="Network Station" /></form>
 	</td>
-    <td>
+    <td valign="top">
     	<form action="/softap.html"><input type="submit" class="menu" value="Access Point" /></form>
 	</td>
   </tr>
@@ -46,17 +46,17 @@
 <br>
 <table border="0" width="800" align="center" cellpadding="3" cellspacing="10">
   <tr>
-    <td bgcolor="#000000" class="copy"><p align="left">Congratulations, you made it this far! Welcome to your &quot;%inputNetHOST%&quot;  Web-configuration Portal!</p>
+    <td bgcolor="#000000" class="copy" valign="top"><p align="left">Congratulations, you made it this far! Welcome to your &quot;%inputNetHOST%&quot;  Web-configuration Portal!</p>
       <p align="left"> Use the orange Menu above to navigate through the  various settings provided by the &quot;%inputNetHOST%&quot; App now installed on  your ESP.</p>
       <p align="left"> Other than displaying the actual ESPs time  on the pages the sketch itself doesn't have any sensor functionality. It has  been put together to help users wanting to use ESPAsyncWebServer, AsyncTCP, and AsyncElegantOTA, in an all-in-one &quot;example&quot;  sketch developed using the Arduino IDE.</p>
-      <p align="left"> The  next steps is to configure the Access Point and Station settings. The NTP server  and time zone are set to my location which is Mountain time. Indeed, you can  set the time zone for anywhere in the world and links are provided to help you  look them up.</p>
-      <p align="left"> Additional information is provided on each  webpage. Let me know about your project and how you will be using this App. You  can send me an email to r.j.pearn@gmail.com. I might to have to setup my own  &quot;Buy me a Coffee&quot; webpage and get some free beers!</p>
+      <p align="left"> Your  next step is to configure the Network Station and  Access Point settings. The NTP server  and time zone are set to my location which is Mountain time. Indeed, you can  set the time zone for anywhere in the world and links are provided to help you  look them up.</p>
+      <p align="left"> Additional information is provided on each  webpage. Let me know about your project and how you will be using this App. You  can send me an email to r.j.pearn@gmail.com.</p>
     <p align="left">The table below is used on the webpages with settings.
       <ul>
   <li class="copy">The yellow area is a description of the setting.<br>
     <br>
   </li>
-  <li class="copy">The area in grey displays the existing value for that setting. In setting with sliders or switches, when a change is made the value in this area will also change.<br>
+  <li class="copy">The area in grey displays the existing value for that setting. In setting with sliders or switches, when a change is made the value in this area will also change. With some browsers it might be difficult to read.<br>
     <br>
   </li>
   <li>The area in white will contain an input field, slider or switch.<br>
@@ -87,12 +87,14 @@
     </form>
   </tr>
 </table>
+
 <br>
 <p align="left">If you have the sketch open in Arduino IDE and the ESP connected to the USB, open the Serial Monitor. Restart the ESP. After initialization the APP lists all the settings loaded from the files. Good way of finding out what a forgotten password is. It will then display the IP address for both the Station and Access Point. The Web Server is started and a &quot;Webserver Ready!&quot; message is shown.</p>
 <p align="left">The next message displayed is &quot;AP will disconnect in xx:xx&quot; xx:xx depends on the minutes to live setting. This message is displayed once every second until the AP disconnects.</p>
-<p align="left">When a webpage is opened, a date and time message will appear. The date every minute and the time every second. Open two webpages at the same time will display two dates and two times, three webpages, three of each message. Every time a page calls for an update it is displayed in the serial monitor. Change a setting, the change will be displayed and all the values in the saved files are again loaded and listed.</p>
-<p align="left">One last note of advice. As you will see there really isn't that many settings and I could have listed them all on one page. The problem is the ESP cannot server the page fast enough and the page is noticeably   slow regenerating.</p>
+<p align="left">When a webpage is opened, a date and time, in hour and minutes, will appear. The they are updated every minute. Open two webpages at the same time will display two dates and two times, three webpages, three of each message. Every time a page calls for an update it is displayed in the serial monitor. Change a setting, the change will be displayed and all the values in the saved files are again loaded and listed.</p>
+<p align="left">One last note of advice. As you will see there really isn't that many settings and I could have listed them all on one page. The problem is the ESP cannot server the page fast enough and the page is noticeably   slow regenerating. Besides, this gives a good example of a multiple page website.</p>
 <p align="left">&nbsp;</p>
+
 </td>
   </tr>
 </table>

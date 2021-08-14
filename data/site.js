@@ -1,6 +1,6 @@
     getESPDate();
     getESPTime();
-	ESPtimer = setInterval(function() {getESPTime();}, 1000); // Call the update function every set interval e.g. 1000mS or 1-sec
+	ESPtimer = setInterval(function() {getESPTime();}, 60000); // Call the update function every set interval e.g. 1000mS or 1-sec
     ESPdater = setInterval(function() {getESPDate();}, 60000); // Call the update function every set interval e.g. 1000mS or 1-sec
 
     function submitMessage() {

@@ -11,62 +11,59 @@
 <body bgcolor="#000000">
 <table border="0" align="center">
   <tr>
-    <td align="center"><span class="sitename">%inputNetHOST%</span></td>
+    <td align="center" valign="top"><span class="sitename">%inputNetHOST%</span></td>
   </tr>
   <tr>
-    <td align="center"><span class="title"><script>document.write(document.title);</script></span></td>
+    <td align="center" valign="top"><span class="title"><script>document.write(document.title);</script></span></td>
   </tr>
   <tr>
-    <td align="center"><br><span class="date" id="ESPDATE">&nbsp;</span></td>
+    <td align="center" valign="top"><br><span class="date" id="ESPDATE">&nbsp;</span></td>
   </tr>
   <tr>
-    <td height="15" align="center"><span align="center" class="led" id="ESPTIME">00:00:00</span></td>
+    <td height="15" align="center" valign="top"><span align="center" class="led" id="ESPTIME"></span><br><font color="#FFFFFF">Hour - Min<BR>ESP Time</font></td>
   </tr>
 </table>
 <br>
 <table border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td>
-   	  <form action="/"><input type="submit" class="menu" value="Home" /></form>
-   </td>
-    <td>
-   	  <form action="/time.html"><input type="submit" class="menu" value="Time Settings" /></form>
-   </td>
-    <td>
-    	<form action="/ElegantOTA.html"><input type="submit" class="menu" value="AsyncElegantOTA" /></form>
-	</td>
-    <td>
-    	<form action="/network.html"><input type="submit" class="menu" value="Network Station" disabled /></form>
-	</td>
-    <td>
-    	<form action="/softap.html"><input type="submit" class="menu" value="Access Point" /></form>
-	</td>
+    <td valign="top">
+   	  <form action="/"><input type="submit" class="menu" value="Home" /></form>   </td>
+    <td valign="top">
+   	  <form action="/time.html"><input type="submit" class="menu" value="Time Settings" /></form>   </td>
+    <td valign="top">
+    	<form action="/ElegantOTA.html"><input type="submit" class="menu" value="AsyncElegantOTA" /></form>	</td>
+    <td valign="top">
+    	<form action="/network.html"><input type="submit" class="menu" value="Network Station" disabled /></form>	</td>
+    <td valign="top">
+    	<form action="/softap.html">
+    	  <input type="submit" class="menu" value="Access Point" />
+        </form>	</td>
   </tr>
 </table>
 <br>
 <table border="0" align="center" cellpadding="8" cellspacing="2">
   <tr>
   	<form action="/get" target="hidden-form">
-    <td width="150" align="center" bgcolor="#FFFF66"><strong>Router SSID Name</strong></td>
-    <td width="150" align="center" bgcolor="#666666"><input type="button" id="NetSSIDInput" value="%inputNetSSID%" size="6" disabled></td>
-    <td width="250" align="center" bgcolor="#FFFFFF"><input type="text" name="inputNetSSID" value="" size="32"></td>
-    <td width="115" align="center" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
+    <td width="150" align="center" valign="top" bgcolor="#FFFF66"><strong>Router SSID Name</strong></td>
+    <td width="150" align="center" valign="top" bgcolor="#666666"><input type="button" id="NetSSIDInput" value="%inputNetSSID%" size="6" disabled></td>
+    <td width="250" align="center" valign="top" bgcolor="#FFFFFF"><input type="text" name="inputNetSSID" value="" size="32"></td>
+    <td width="115" align="center" valign="top" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
     </form>
   </tr>
   <tr>
   	<form action="/get" target="hidden-form">
-    <td align="center" bgcolor="#FFFF66"><strong>Router Password</strong></td>
-    <td align="center" bgcolor="#666666"><input type="button" id="NetPASSInput" value="%inputNetPASS%" size="6" disabled></td>
-    <td align="center" bgcolor="#FFFFFF"><input type="text" name="inputNetPASS" value="" size="32"></td>
-    <td align="center" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
+    <td align="center" valign="top" bgcolor="#FFFF66"><strong>Router Password</strong></td>
+    <td align="center" valign="top" bgcolor="#666666"><input type="button" id="NetPASSInput" value="%inputNetPASS%" size="6" disabled></td>
+    <td align="center" valign="top" bgcolor="#FFFFFF"><input type="text" name="inputNetPASS" value="" size="32"></td>
+    <td align="center" valign="top" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
     </form>
   </tr>
   <tr>
   	<form action="/get" target="hidden-form">
-    <td align="center" bgcolor="#FFFF66"><strong>Network Hostname</strong></td>
-    <td align="center" bgcolor="#666666"><input type="button" id="NetHOSTinput" value="%inputNetHOST%" size="6" disabled></td>
-    <td align="center" bgcolor="#FFFFFF"><input type="text" name="inputNetHOST" value="" size="32"></td>
-    <td align="center" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
+    <td align="center" valign="top" bgcolor="#FFFF66"><strong>Network Hostname</strong></td>
+    <td align="center" valign="top" bgcolor="#666666"><input type="button" id="NetHOSTinput" value="%inputNetHOST%" size="6" disabled></td>
+    <td align="center" valign="top" bgcolor="#FFFFFF"><input type="text" name="inputNetHOST" value="" size="32"></td>
+    <td align="center" valign="top" bgcolor="#4CAF50"><input type="submit" class="update" value="Update" onClick="submitMessage()"></td>
     </form>
   </tr>
   <tr>
@@ -74,19 +71,18 @@
     <td></td>
     <td></td>
     <td></td>
-    <td align="center" bgcolor="#FF0000"><input type="hidden" id="restartESP" name="restartESP" value="1"><input type="submit" class="reset" value="Restart ESP" onClick="submitMessage()">    </td>
+    <td align="center" valign="top" bgcolor="#FF0000"><input type="hidden" id="restartESP" name="restartESP" value="1"><input type="submit" class="reset" value="Restart ESP" onClick="submitMessage()">    </td>
     </form>
   </tr>
 </table>
 <br>
 <table border="0" width="800" align="center" cellpadding="3" cellspacing="10">
   <tr>
-    <td bgcolor="#000000" class="copy"><p align="left">These settings are required to connect to  your Wi-Fi Router. You can change any of these settings without having to  restart the ESP. When the ESP is powered up, the AP is started for the minutes  set in the Access Point setting &quot;Minutes to Live&rdquo; and stays running until  the time has elapsed. Before it is shutdown it confirms there is a network  connection. If not, the shutdown is diverted until the network connection is  confirmed. The AP function runs every Loop cycle. When the TTL has expired and  the AP has been shut down, the next statement checks the network connection. If  it fails, it attempts to restart the network and restarts the AP. </p>
-      <p align="left">The App is setup to use the DHCP supplied  by your router. If you require a static IP, you will need to add some code to  provide that option. Typically, most routers can be setup to assign, or  reserve, IPs by MAC address. </p>
-      <p align="left">The Hostname you provide will help identify  this ESP in the router. The title on the top of all the webpages is also this  same Hostname. This name SHOULD be unique to your network. If you use a Hostname more than once you will not be able to reserve an IP for it in your router settings.</p>
-      <p align="left">The Restart button is provided as a convenience.  One scenario when you will need to use it, is if you have two Wi-Fi routers  within the ESPs Wi-Fi range, and you want to change routers the ESP is  connected to. </p>
-      <p align="left">There is a little hidden spot in the ESP  that remembers the last known connected network. So if you make a mistake  changing your settings, the ESP will remember what worked before and will  attempt to connect using those settings again.</p>
-      <p align="left">&nbsp;</p></td>
+    <td bgcolor="#000000" valign="top" class="copy"><p align="left">These settings are required to connect to your Wi-Fi Router. You can change any of these settings without having to restart the ESP. When the ESP is powered up, the AP is started for the minutes set in the Access Point setting &quot;Minutes to Live&rdquo; and stays running until the time has elapsed. Before it is shutdown.</p>
+      <p align="left">The App is setup to use the DHCP supplied  by your router. If you require a static IP, you will need to add some code to  provide that option. Typically, most routers can be setup to assign, or reserve, IPs by MAC address.</p>
+      <p align="left">The Hostname you provide will help identify this ESP in the router. The title on the top of all the webpages is also this Hostname. This name SHOULD be unique to your network. If you use a Hostname more than once you will not be able to reserve an IP for it in your router settings.</p>
+      <p align="left">A restart is required to apply changes  made in the Network Station settings. Be sure your new settings are displayed correctly in the grey area. The Restart button is provided as a convenience.</p>
+      </td>
   </tr>
 </table>
 <iframe style="display:none" name="hidden-form"></iframe>

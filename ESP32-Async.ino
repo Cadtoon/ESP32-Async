@@ -50,7 +50,7 @@
 
  *****************************************************************************************************************************/
 #include <Arduino.h>
-#include "time.h"
+// #include "time.h"
 #include <WiFi.h>
 #include <AsyncTCP.h>
 #include <SPIFFS.h>
@@ -202,89 +202,63 @@ String processor(const String& var){
   return String();
 }
 
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-// checks status of access point. AP_period is changable via webpage
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Checks status of access point. AP_period is changable via webpage.
+My initial code would check the network connection and attempt to reconnect to it. 
+These repeated attempts caused the "watch dog" to restart the ESP.
+KISS = keep it simple stupid
+*/
 void checkAP(){
   if(millis() >= APTimer + (AP_period * 60000)){ // multiply AP_period. 60000 == 1 minute
-    if(WiFi.status() != WL_CONNECTED){ //if the Wi-Fi has no connection
-      Serial.println("Reconnecting Local WiFi");
-      WiFi.disconnect(); //disconnect prior attempt
-      WiFi.begin(wifi_network_ssid.c_str(), wifi_network_password.c_str()); //restart Wi-Fi
-      delay(5000); //gives all resources and extra time for wi-fi to connect
-      Serial.print("ESP32 IP on the WiFi network: ");
-      Serial.println(WiFi.localIP());
-      if(APdisconnected == true){ // if the local network is down restart the AP
-        if(WiFi.softAP(soft_ap_ssid.c_str(), soft_ap_password.c_str())){
-          IPAddress myIP = WiFi.softAPIP();
-          Serial.println("Network " + String(soft_ap_ssid) + " restarted");
-          Serial.print("AP IP address: ");
-          Serial.println(myIP);
-          APdisconnected = false;
-          Serial.println("Restarting AP Time-to-Live at " + String(AP_period) + " minutes");
-          APTimer = millis(); // resets the timer
-        }
-      }
-      else{
-          Serial.println("AP Disconnection Diverted!"); // if no network and AP timer has expired, the AP shutdown was bypassed
-      }
-    }
-    else{
-      if(APdisconnected == false){ // if the Wi-Fi is connected and APtimer has expired, shutdown the AP
-        WiFi.softAPdisconnect (true);
-        Serial.println("AP Disconnected");
-        APdisconnected = true;
-     }
+    if(APdisconnected == false){    
+      WiFi.softAPdisconnect (true);
+      Serial.println("AP Disconnected");
+      APdisconnected = true;
     }
   }
-  else{
-    if(APdisconnected == false){ //display on monitor how long before APtimer epires
-      Serial.print("AP will disconnect in ");
-      int min = ((((APTimer + (AP_period * 60000)) - millis())/1000)/60);
-      if(min < 10)Serial.print("0");
-      Serial.print(min);
-      Serial.print(":");
-      int sec = ((((APTimer + (AP_period * 60000)) - millis())/1000)%60);
-      if(sec < 10)Serial.print("0");
-      Serial.println(sec);
+  if(APdisconnected == false){ //display on monitor how long before APtimer epires
+    Serial.print("AP will disconnect in ");
+    int min = ((((APTimer + (AP_period * 60000)) - millis())/1000)/60);
+    if(min < 10)
+      Serial.print("0");{
     }
+    Serial.print(min);
+    Serial.print(":");
+    int sec = ((((APTimer + (AP_period * 60000)) - millis())/1000)%60);
+    if(sec < 10){
+      Serial.print("0");
+    }
+    Serial.println(sec);
   }
 }
 
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-String getESPdate(){ // send date in string format to webpage request
+String getESPtimedate(String value){ // send date in string format to webpage request
+  char timeStringBuff[50];
   if(WiFi.status() == WL_CONNECTED){//if the Wi-Fi has a connection
     struct tm timeinfo;
     if(!getLocalTime(&timeinfo)){
-      Serial.println("date requested");
-    return("Failed Local Time - No Date Available");
+    return("Failed DateTime Request");
     }
-    char timeStringBuff[50];
-    strftime(timeStringBuff, sizeof(timeStringBuff), "%A, %B %d, %Y", &timeinfo);
+    if(value == "getdate"){
+      Serial.println("Date Requested");
+      strftime(timeStringBuff, sizeof(timeStringBuff), "%A, %B %d, %Y", &timeinfo);
+    }
+    else if(value == "gettime"){
+      Serial.println("Time Requested");
+      strftime(timeStringBuff, sizeof(timeStringBuff), "%H %M", &timeinfo);
+    }
     String asString(timeStringBuff);
     Serial.println(timeStringBuff);
     return(timeStringBuff);
   }
   else{
-    return("Failed Network - No Date Available");
-  }
-}
-
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-String getESPtime(){ // send time HH:MM:SS in string format to webpage request
-  struct tm timeinfo;
-  if(WiFi.status() == WL_CONNECTED){//if the Wi-Fi has a connection
-    if(!getLocalTime(&timeinfo)){
-      Serial.println("Failed to obtain time");
-      return("00:00:00");
+    if(value == "getdate"){
+      return("Thursday, January 1, 1970");
     }
-    char timeStringBuff[50];
-    strftime(timeStringBuff, sizeof(timeStringBuff), "%H:%M:%S", &timeinfo);
-    String asString(timeStringBuff);
-    Serial.println(timeStringBuff);
-    return(timeStringBuff);
-  }
-  else{
-    return("00:00:00");
+    else if(value == "gettime"){
+      return("00 00");
+     }
   }
 }
 
@@ -319,10 +293,10 @@ Serial.begin(115200);
 
 // handle time requests
   webserver.on("/ESPTIME", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(200, "text/plain", getESPtime());
+    request->send(200, "text/plain", getESPtimedate("gettime"));
   });
   webserver.on("/ESPDATE", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(200, "text/plain", getESPdate());
+    request->send(200, "text/plain", getESPtimedate("getdate"));
   });
 // handle webpage requests
   webserver.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
@@ -428,7 +402,7 @@ Serial.begin(115200);
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 void loop() {
   if(millis() >= LOOPtimer + LOOP_period){ //better than using delay(1000);
-    checkAP(); // keeps an eye on network connections
+    if(!APdisconnected) checkAP(); // keeps an eye on network connections
     LOOPtimer = millis(); //resets this timer
   }
 }

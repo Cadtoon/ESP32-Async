@@ -11,34 +11,34 @@
 <body bgcolor="#000000">
 <table border="0" align="center">
   <tr>
-    <td align="center"><span class="sitename">%inputNetHOST%</span></td>
+    <td align="center" valign="top"><span class="sitename">%inputNetHOST%</span></td>
   </tr>
   <tr>
-    <td align="center"><span class="title"><script>document.write(document.title);</script></span></td>
+    <td align="center" valign="top"><span class="title"><script>document.write(document.title);</script></span></td>
   </tr>
   <tr>
-    <td align="center"><br><span class="date" id="ESPDATE">&nbsp;</span></td>
+    <td align="center" valign="top"><br><span class="date" id="ESPDATE">&nbsp;</span></td>
   </tr>
   <tr>
-    <td height="15" align="center"><span align="center" class="led" id="ESPTIME">00:00:00</span></td>
+    <td height="15" align="center" valign="top"><span align="center" class="led" id="ESPTIME"></span><br><font color="#FFFFFF">Hour - Min<BR>ESP Time</font></td>
   </tr>
 </table>
 <br>
 <table border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
-    <td>
+    <td valign="top">
    	  <form action="/"><input type="submit" class="menu" value="Home" /></form>
    </td>
-    <td>
+    <td valign="top">
    	  <form action="/time.html"><input type="submit" class="menu" value="Time Settings" /></form>
    </td>
-    <td>
+    <td valign="top">
     	<form action="/ElegantOTA.html"><input type="submit" class="menu" value="AsyncElegantOTA" disabled /></form>
 	</td>
-    <td>
+    <td valign="top">
     	<form action="/network.html"><input type="submit" class="menu" value="Network Station" /></form>
 	</td>
-    <td>
+    <td valign="top">
     	<form action="/softap.html"><input type="submit" class="menu" value="Access Point" /></form>
 	</td>
   </tr>
@@ -48,7 +48,8 @@
 <br>
 <table border="0" width="800" align="center" cellpadding="3" cellspacing="10">
   <tr>
-    <td bgcolor="#000000" class="copy"><p align="left">This  is the AsyncElegantOTA App. I have no control over its functionallity. It only sucessfully uploads bin files. If you upload any other type of file it will corrupt the SPIFFS file system and all the existing saved vars will be deleted. You might even have to reformat the SPIFFS to get it back.</p>
+    <td bgcolor="#000000" class="copy" valign="top">
+    <p align="left">This is the AsyncElegantOTA App. I have no control over its functionallity. It only sucessfully uploads bin files. If you upload any other type of file it will corrupt the SPIFFS file system and all the existing saved vars will be deleted. You might even have to reformat the SPIFFS to get it back.</p>
       <p align="left">This tutorial will show you how to create a bin file of a sketch using Arduino iDE. <a href="https://randomnerdtutorials.com/esp32-over-the-air-ota-programming/" target="_blank" class="copy">https://randomnerdtutorials.com/esp32-over-the-air-ota-programming/ </a>Be sure you have selected &quot;Firmware&quot; when uploading your sketch.</p>
     <p align="left">This tutorial will show you how to create a bin file of the files located in a sketches data folder using Arduino iDE. <a href="https://randomnerdtutorials.com/esp32-web-server-spiffs-spi-flash-file-system/" target="_blank" class="copy">https://randomnerdtutorials.com/esp32-web-server-spiffs-spi-flash-file-system/ </a>Be sure you have selected &quot;Filesystem&quot; when uploading your data.</p>
     <p align="left">&nbsp;</p></td>
