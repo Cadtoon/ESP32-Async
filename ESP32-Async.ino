@@ -88,6 +88,7 @@ void GetNTPtime(){
   if(WiFi.status() == WL_CONNECTED){//if the Wi-Fi has a connection
     configTzTime(ntpzone.c_str(), ntpserver.c_str()); // adjust to your local time zone with variable timezone on the webpage
     Serial.println("NTP time retrieved");
+    delay(1500); //delay to prevent multiple requests
   }
   else{
     Serial.println("NTP Server not available"); // if no WI-Fi send message to the serial monitor
