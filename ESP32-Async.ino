@@ -15,10 +15,6 @@
       * NTP time server
       * Reconnects Wi-Fi connection when lost
    
-  Based on but not specific to:
-            https://github.com/khoih-prog/ESPAsync_WiFiManager
-            https://github.com/ayushsharma82/AsyncElegantOTA
-            https://github.com/me-no-dev/ESPAsyncWebServer
   Licensed under MIT license
 
   With much assistance from (but not limited to) tutorials and sample code provided by
@@ -52,12 +48,12 @@
 
  *****************************************************************************************************************************/
 // These are the libraries needed in this sketch
-#include <Arduino.h>
-#include <WiFi.h>
-#include <AsyncTCP.h>
-#include <SPIFFS.h>
-#include <ESPAsyncWebServer.h>
-#include <AsyncElegantOTA.h>
+#include <Arduino.h> // https://github.com/espressif/arduino-esp32
+#include <WiFi.h> // https://github.com/espressif/arduino-esp32
+#include <AsyncTCP.h> // https://github.com/me-no-dev/AsyncTCP
+#include <SPIFFS.h> // https://github.com/espressif/arduino-esp32
+#include <ESPAsyncWebServer.h> // https://github.com/me-no-dev/ESPAsyncWebServer
+#include <AsyncElegantOTA.h> // https://github.com/ayushsharma82/AsyncElegantOTA
 
 // All global variables are kept in the header_var.h file. You should see its tab above
 #include "header_vars.h"
